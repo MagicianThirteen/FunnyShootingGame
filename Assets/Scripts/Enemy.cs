@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour
+public class Enemy : LivingEntity
 {
     // Start is called before the first frame update
     private NavMeshAgent _findPathagent;
     private Transform target;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         _findPathagent = GetComponent<NavMeshAgent>();
         target=GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(UpdatePathFind());
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -24,8 +25,8 @@ public class Enemy : MonoBehaviour
 
     IEnumerator UpdatePathFind()
     {
-        float freshRare = 1f;
-        while (target!=null)
+        float freshRare = .25f;
+        while (target!=null&&!isDead)
         {
             Vector3 targetPosition = new Vector3(target.position.x, 0, target.position.y);
             _findPathagent.SetDestination(targetPosition);

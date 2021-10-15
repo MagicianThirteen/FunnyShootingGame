@@ -34,7 +34,9 @@ public class Projectile : MonoBehaviour
 
     void HitDoing(RaycastHit hit)
     {
-        Debug.Log("当前打到的是："+hit.collider.gameObject.name);
+        //Debug.Log("当前打到的是："+hit.collider.gameObject.name);
+        LivingEntity currEntity = hit.collider.GetComponent<LivingEntity>();
+        currEntity.TakeHit(1,hit);
         Destroy(gameObject);
     }
 }
